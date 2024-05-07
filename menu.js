@@ -1,231 +1,132 @@
 const platoCentral = {
-    "Lubina" : 15,
-    "Chuleton" : 45,
-    "Ensalada de la casa": 30,
-    "Mariscada" : 50 
+    "a) Lubina" : 15,
+    "b) Chuleton" : 45,
+    "c) Ensalada de la casa": 30,
+    "d) Mariscada" : 50 
 };
 
 const complementos = {
-    "Patatas Bravas" : 5,
-    "Surtido Ibericos" : 12,
-    "Sopa" : 7
+    "a) Patatas Bravas" : 5,
+    "b) Surtido Ibericos" : 12,
+    "c) Sopa" : 7
 };
 
 const desayuno = {
-    "cafe + bolleria" : 4,
-    "cafe + pintxo" : 5,
-    "huevos + bacon + chorizo" : 10
+    "a) cafe + bolleria" : 4,
+    "b) cafe + pintxo" : 5,
+    "c) huevos + bacon + chorizo" : 10
 }; 
 
 const comentarios = ["muy buena eleccion", "lo he probado y esta exquisito", "tienes buen ojo para la comida", "ummmm delicioso", "le va a encantar, luego me cuenta"];
 
-alert ("Bienvenid@s a nuestro fantastico restaurante");
+alert("Bienvenid@s a nuestro fantástico restaurante");
 
-let horario = prompt("¿hola podria decirnos en que franja horaria estamos?:\n a) de 7 a 12h \n b) de 13 a 17h \n c) de 20 a 00h \n (elija solo la letra de la franja sin el parentesis)").toLowerCase
+let horario = prompt("¿Hola, en qué franja horaria estamos?\n a) De 7 a 12h \n b) De 13 a 17h \n c) De 20 a 00h \n(Elija solo la letra de la franja sin el paréntesis)").toLowerCase();
 
-if (horario === "a") {
-
-    const menuDesayuno =() => {
+if (horario === "a"){
+    const menuDesayuno = () => {
+        let listaDesayuno = [];
         for (let des in desayuno) {
-            
-            let listaDesayuno = [];
-            let nombreDesayuno = desayuno[des];
-            let precioDesayuno = desayuno[nombreDesayuno];
-            listaDesayuno.push(`${nombreDesayuno} : ${precioDesayuno} \n`);
-             
-        };
-        alert(`Genial! veo que quieres desayunar, aqui tienes nuestro fantastico desayuno ${listaDesayuno},`); 
-    }
-    
-    
-    
-
-    let eleccion = prompt("elija lo que quiera de la carta")
-
-   peticionEspecial = prompt("¿desea que hagamos su comida individualmente por algun tema de alergia o intolerancia? tiene un sobrecoste de un 5% adicional (s/n)").toLowerCase;
-    
-    for (des in desayuno){
-        
-        if (eleccion === Object.keys(desayuno)){
-            alert(Math.round(Math.random() * comentarios.length));
-            
+            let nombreDesayuno = des;
+            let precioDesayuno = desayuno[des];
+            listaDesayuno.push(`${nombreDesayuno} : ${precioDesayuno.toFixed(2)}€ \n`);
         }
-        else ("elija correctamente el plato");
-
+        alert(`Genial! Veo que quieres desayunar. Aquí tienes nuestro fantástico desayuno:\n${listaDesayuno}`);
     };
-    peticionEspecial = prompt("¿desea que hagamos su comida individualmente por algun tema de alergia o intolerancia? tiene un sobrecoste de un 5% adicional (s/n)").toLowerCase;
-    precioDesayuno(eleccion, peticionEspecial)
 
-}
-if (horario === "b") {
+    menuDesayuno();
+    
+    let eleccion = prompt("Elija lo que quiera de la carta");
 
-    alert(`¡¡¡Genial!!!, veo que quieres comer. ${menuCompletoCommida}`);
-
-    let eleccionCentral = prompt("elija primero un plato central").toLowerCase;
-    peticionEspecial = prompt("¿desea que hagamos su comida individualmente por algun tema de alergia o intolerancia? tiene un sobrecoste de un 5% adicional (s/n)").toLowerCase;
-
-    alert(Math.round(Math.random() * comentarios.length));
-
-    let preguntaComplemento = prompt("¿quieres un complemento? (s/n)").toLowerCase;
-    if (preguntaComplemento = "s") {
-        let eleccionComplemento = prompt("elije un complemento").toLowerCase; 
-        alert(Math.round(Math.random() * comentarios.length));
+    let peticionEspecial = prompt("¿Desea que hagamos su comida individualmente por algún tema de alergia o intolerancia? Tiene un sobrecoste de un 5% adicional (s/n)").toLowerCase();
+    
+    if (desayuno.hasOwnProperty(eleccion)){
+        alert(comentarios[Math.floor(Math.random() * comentarios.length)]);
+    } else {
+        alert("Elija correctamente el plato.");
     }
-    let preguntaComplementoDos = prompt ("¿quieres otro complemento? (s/n)").toLowerCase;
-    if (preguntaComplemento = "s") {
-        let eleccionComplementoDos = prompt("elije otro complemento").toLowerCase; 
-        alert(Math.round(Math.random() * comentarios.length));
+
+    precioDesayuno(eleccion, peticionEspecial);
+}
+
+if (horario === "b"){
+    alert("¡Genial! Veo que quieres comer.");
+
+    const menuCompletoComida = () => {
+        let listaPlatoCentral = [];
+        for (let central in platoCentral) {
+            let nombrePlatoCentral = central;
+            let precioPlatoCentral = platoCentral[central];
+            listaPlatoCentral.push(`${nombrePlatoCentral} : ${precioPlatoCentral.toFixed(2)}€, \n`);
+        }
+        let listaComplementos = [];
+        for (let complemento in complementos) {
+            let nombreComplemento = complemento;
+            let precioComplemento = complementos[complemento];
+            listaComplementos.push(`${nombreComplemento} : ${precioComplemento.toFixed(2)}€, \n`);
+        }
+        alert(`Nuestro fantástico menú de comida es el siguiente:\nPlatos Centrales:\n${listaPlatoCentral}\nComplementos:\n${listaComplementos}`);
+    };
+
+    menuCompletoComida();
+
+    let eleccionCentral = prompt("Elija primero un plato central").toLowerCase();
+    let peticionEspecial = prompt("¿Desea que hagamos su comida individualmente por algún tema de alergia o intolerancia? Tiene un sobrecoste de un 5% adicional (s/n)").toLowerCase();
+
+    alert(comentarios[Math.floor(Math.random() * comentarios.length)]);
+
+    let preguntaComplemento = prompt("¿Quiere un complemento? (s/n)").toLowerCase();
+    let eleccionComplemento;
+    if (preguntaComplemento === "s") {
+        eleccionComplemento = prompt("Elija un complemento").toLowerCase(); 
+        alert(comentarios[Math.floor(Math.random() * comentarios.length)]);
+    }
+    let preguntaComplementoDos = prompt ("¿Quiere otro complemento? (s/n)").toLowerCase();
+    let eleccionComplementoDos;
+    if (preguntaComplementoDos === "s") {
+        eleccionComplementoDos = prompt("Elija otro complemento").toLowerCase(); 
+        alert(comentarios[Math.floor(Math.random() * comentarios.length)]);
     }
     precioComida(eleccionCentral, eleccionComplemento, eleccionComplementoDos, peticionEspecial);
 }
 
 if (horario === "c") {
-    alert("¡¡¡Genial!!!, veo que quieres cenar. ${menuCompletoCena}");
+    alert("¡Genial! Veo que quieres cenar.");
 
-    let eleccionCentral = prompt("elija primero un plato central").toLowerCase;
-
-    alert(Math.round(Math.random() * comentarios.length));
-
-    peticionEspecial = prompt("¿desea que hagamos su comida individualmente por algun tema de alergia o intolerancia? tiene un sobrecoste de un 5% adicional (s/n)").toLowerCase;
-
-    let preguntaComplemento = prompt("¿quieres un complemento? (s/n)").toLowerCase;
-
-    if (preguntaComplemento = "s") {
-
-        let eleccionComplemento = prompt("elije un complemento").toLowerCase; 
-        alert(Math.round(Math.random() * comentarios.length));
-    }
-    let preguntaComplementoDos = prompt ("¿quieres otro complemento? (s/n)").toLowerCase;
-
-    if (preguntaComplemento = "s") {
-
-        let eleccionComplementoDos = prompt("elije otro complemento").toLowerCase; 
-        alert(Math.round(Math.random() * comentarios.length));
-    }
-   precioCena(eleccion, peticionEspecial) ;
-}
-
-// desayuno
-
-
-
-function precioDesayuno(eleccion, peticionEspecial) {
-    
-    for (des in desayuno) {
-        let precio;
-        let precioTotal;
-        if (eleccion === Object.keys(desayuno)){
-            precio = parseInt(Object.values(desayuno.eleccion));
-            precioTotal = precio * 1,10;
-
-            
-            if (peticionEspecial === "s") {
-                precio *= 1.05;
-                precioTotal *= precio *1.10;
-            }
-        alert ("el precio de tu desayuno es: ${precio} € sumando el IVA (10%) el total es :${precioTotal}");
-        } else ("no hay precio para ese plato");
-    }
-}
-
-function precioComida (eleccion, complementoUno, complementoDos, peticionEspecial) {
-    let precio;
-    let precioTotal;
-    function  menuCompletoComida(){
+    const menuCompletoCena = () => {
+        let listaPlatoCentral = [];
         for (let central in platoCentral) {
-            let listaPlatoCentral;
-            let nombrePlatoCentral = Object.keys(platoCentral[central])
-            let precioPlatoCentral = Object.values(platoCentral[central]);
-            listaPlatoCentral = listaPlatoCentral.push(`${nombrePlatoCentral} : ${precioPlatoCentral}€ \n`);
-            
-            return listaPlatoCentral;  
+            let nombrePlatoCentral = central;
+            let precioPlatoCentral = (platoCentral[central] * 1.15).toFixed(2); // Aumento del 15% para la cena
+            listaPlatoCentral.push(`${nombrePlatoCentral} : ${precioPlatoCentral}€, \n`);
         }
-        
+        let listaComplementos = [];
         for (let complemento in complementos) {
-            
-            let listaComplementos = [];
-            let nombreComplementos = objetc.keys(complementos[complemento])
-            let precioComplementos = objetc.values(complementos[complemento]);
-            listaComplementos = listaComplementos.push(`${nombreComplementos} : ${precioComplementos}€\n`)
-            
-            return listaComplementos;
-            
+            let nombreComplemento = complemento;
+            let precioComplemento = (complementos[complemento] * 1.15).toFixed(2); // Aumento del 15% para la cena
+            listaComplementos.push(`${nombreComplemento} : ${precioComplemento}€, \n`);
         }
-     alert (`nuestro fantastico menu de comida es el siguiente: ${listaPlatoCentral} y los siguientes complementos: ${listaComplementos}`)
-    };   
-    
-    for (plato in platoCentral ) {
-        
-        if (eleccion === Object.keys(platoCentral)) {
-            precio += parseInt(Object.values(platoCentral.eleccion));
-            precioTotal += precio * 1,10
-            
-        }
-    }
-    for (comp in complementos ) {
-        
-        if (eleccion === Object.keys(complementos)) {
-            precio += parseInt(Object.values(complementos.eleccion));
-            precioTotal += precio * 1,10
-            
-        };
-    }
-    if (peticionEspecial === "s") {
-        precio *= 1.05
-        precioTotal *= precio *1.10
-    } 
-        alert ("el precio de tu desayuno es: ${precio} € sumando el IVA (10%) el total es :${precioTotal}")
-    
-}
+        alert(`Nuestro fantástico menú de cena es el siguiente:\nPlatos Centrales:\n${listaPlatoCentral}\nComplementos:\n${listaComplementos}`);
+    };
 
+    menuCompletoCena();
 
-function precioCena(eleccion, peticionEspecial) {
+    let eleccionCentral = prompt("Elija primero un plato central").toLowerCase();
 
-    let precio;
-    let precioTotal;
-    function menuCompletoCena() {
-        for (let central in platoCentral) {
-    
-            let listaPlatoCentral = [];
-            let nombrePlatoCentral = platoCentral[central];
-            let precioPlatoCentral = parseInt(platoCentral[nombrePlatoCentral])*1.15;
-            listaPlatoCentral.push(`${nombrePlatoCentral} : ${precioPlatoCentral}€ \n`).toString();
-            return listaPlatoCentral;  
-        }
-        
-        for (let complemento in complementos) {
-            
-            let listaComplementos = [];
-            let nombreComplemento = complementos[central];
-            let precioComplemento = parseInt(complementos[nombrePlatoCentral])*1.15;
-            listaComplementos.push(`${nombreComplemento} : ${precioComplemento}€ \n`).toString();
-            
-            return listaEntrantes;
-            
-        }
-     alert (`nuestro fantastico menu de cena es el siguiente:${listaPlatoCentral} y los siguientes complementos: ${listaComplementos}`)
-    };    
-    
-    for (plato in platoCentral ) {
-        
-        if (eleccion === Object.keys(platoCentral)) {
-            precio += parseInt(Object.values(platoCentral.eleccion))*1.15;
-            precioTotal += precio * 1,10;
-            
-        }
+    alert(comentarios[Math.floor(Math.random() * comentarios.length)]);
+
+    let peticionEspecial = prompt("¿Desea que hagamos su comida individualmente por algún tema de alergia o intolerancia? Tiene un sobrecoste de un 5% adicional (s/n)").toLowerCase();
+
+    let preguntaComplemento = prompt("¿Quiere un complemento? (s/n)").toLowerCase();
+    let eleccionComplemento;
+    if (preguntaComplemento === "s") {
+        eleccionComplemento = prompt("Elija un complemento").toLowerCase(); 
+        alert(comentarios[Math.floor(Math.random() * comentarios.length)]);
     }
-    for (comp in complementos ) {
-        
-        if (eleccion === Object.keys(complementos)) {
-            precio += parseInt(Object.values(complementos.eleccion))*1.15;
-            precioTotal += precio * 1,10
-            
-        };
-        if (peticionEspecial === "s") {
-            precio *= 1.05;
-            precioTotal *= precio *1.10;
-        } 
+    let preguntaComplementoDos = prompt ("¿Quiere otro complemento? (s/n)").toLowerCase();
+    let eleccionComplementoDos;
+    if (preguntaComplementoDos === "s") {
+        eleccionComplementoDos = prompt("Elija otro complemento").toLowerCase(); 
+        alert(comentarios[Math.floor(Math.random() * comentarios.length)]);
     }
-        alert (`el precio de tu desayuno es: ${precio} € sumando el IVA (10%) el total es :${precioTotal}`)
-    
-}
+    precioCena(eleccionCentral, petic
