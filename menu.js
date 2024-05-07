@@ -1,4 +1,4 @@
-// variables de mis menus
+// variables y menus de mi codigo
 let menus = {
     "a": {
         franjaHoraria: "Desayuno (7h - 12h)",
@@ -23,7 +23,7 @@ let menus = {
     }
 };
 
-// mi Función para imprimir el menú de selección y que quede legible
+// mi Función para imprimir el menú de selección y que sea mas sencillo de leer por el usuario
 function imprimirMenuSeleccion(menu, tipoPlato) {
     let menuString = `Menú ${menu.franjaHoraria}\n\n${tipoPlato}:\n\n`;
     menu[tipoPlato].forEach((plato, index) => {
@@ -32,7 +32,7 @@ function imprimirMenuSeleccion(menu, tipoPlato) {
     return menuString;
 }
 
-// mi Función para seleccionar un plato despues de la interaccion del usuario
+// la Función para seleccionar un plato
 function seleccionarPlato(menu, tipoPlato, index) {
     return {
         plato: menu[tipoPlato][index],
@@ -40,7 +40,7 @@ function seleccionarPlato(menu, tipoPlato, index) {
     };
 }
 
-// Función para obtener un comentario ingenioso aleatorio
+//mi super Función para obtener un comentario ingenioso aleatorio
 function comentarioIngenioso() {
     const comentarios = [
         "¡Excelente elección!",
@@ -52,7 +52,7 @@ function comentarioIngenioso() {
     return comentarios[Math.floor(Math.random() * comentarios.length)];
 }
 
-// Función para calcular el precio total, la factura y resumen de la comida
+// Función para calcular el precio total, ressumen de lo consumido y factura con Iva
 function calcularPrecioTotal(primerPlatoIndex, segundoPlatoIndex, bebidaIndex, franjaHoraria) {
     let menu = menus[franjaHoraria];
     let primerPlato = seleccionarPlato(menu, "primerPlato", primerPlatoIndex - 1);
@@ -70,11 +70,16 @@ function calcularPrecioTotal(primerPlatoIndex, segundoPlatoIndex, bebidaIndex, f
     alert(mensaje);
 }
 
-// Función para pedir la franja horaria al usuario con gestion del error y explicacion de como seleccionar
+// la Función para pedir la franja horaria al usuario explicacion de  como seleccionar horario y error definido para que el usuario pueda corregirlos 
 function pedirFranjaHoraria() {
     let franja;
     do {
-        franja = prompt("¿En qué franja horaria te encuentras?\n (las opciones se eligen con a , b ó c sin parentesis)\n(a) 7 a 12h (Desayuno)\n(b) 13 a 17h (Comida)\n(c) 20 a 00h (Cena)").toLowerCase();
+        franja = prompt("¿En qué franja horaria te encuentras?\n (las opciones se eligen con a , b ó c sin parentesis)\n (a) 7 a 12h (Desayuno)\n (b) 13 a 17h (Comida)\n (c) 20 a 00h (Cena)");
+        if (franja === null) {
+                alert("¡¡¡pero que has hecho, has cancelado la seleccion de horario!!!");
+            return null; 
+        }
+        franja = franja.toLowerCase();
         if (franja !== "a" && franja !== "b" && franja !== "c") {
             alert("No te despistes has Seleccionado una opcion incorrecta. Por favor, elige un número válido.")
         };
@@ -87,7 +92,7 @@ function validarSeleccionPlato(menu, tipoPlato, index) {
     return index >= 1 && index <= menu[tipoPlato].length;
 }
 
-// Orden de ejecución del código para visionado correcto del ususario
+// Orden de ejecución del código y de simplicidad para el usuario
 alert("¡Bienvenido a nuestro fantástico restaurante!");
 alert("Queremos darle un buen servicio, por lo tanto le solicitaremos en que horario vas a comer, para que no haya confusiones con los menus. Tambien podra consultar nuestros platos y precios para no llevarse sorpresas negativas. Le recordamos que todos nuestros precios llevan el IVA incluido. En caso de tener alguna duda esctribanos a: \n elMejor_RestauranteMundial@comebien.com ");
 let franjaHoraria = pedirFranjaHoraria();
