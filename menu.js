@@ -29,7 +29,7 @@ if (horario === "a"){
         for (let des in desayuno) {
             let nombreDesayuno = des;
             let precioDesayuno = desayuno[des];
-            listaDesayuno.push(`${nombreDesayuno} : ${precioDesayuno.toFixed(2)}€ \n`);
+            listaDesayuno.push(`${nombreDesayuno} : ${precioDesayuno}€, \n`);
         }
         alert(`Genial! Veo que quieres desayunar. Aquí tienes nuestro fantástico desayuno:\n${listaDesayuno}`);
     };
@@ -57,13 +57,13 @@ if (horario === "b"){
         for (let central in platoCentral) {
             let nombrePlatoCentral = central;
             let precioPlatoCentral = platoCentral[central];
-            listaPlatoCentral.push(`${nombrePlatoCentral} : ${precioPlatoCentral.toFixed(2)}€, \n`);
+            listaPlatoCentral.push(`${nombrePlatoCentral} : ${precioPlatoCentral}€, \n`);
         }
         let listaComplementos = [];
         for (let complemento in complementos) {
             let nombreComplemento = complemento;
             let precioComplemento = complementos[complemento];
-            listaComplementos.push(`${nombreComplemento} : ${precioComplemento.toFixed(2)}€, \n`);
+            listaComplementos.push(`${nombreComplemento} : ${precioComplemento}€, \n`);
         }
         alert(`Nuestro fantástico menú de comida es el siguiente:\nPlatos Centrales:\n${listaPlatoCentral}\nComplementos:\n${listaComplementos}`);
     };
@@ -97,13 +97,13 @@ if (horario === "c") {
         let listaPlatoCentral = [];
         for (let central in platoCentral) {
             let nombrePlatoCentral = central;
-            let precioPlatoCentral = (platoCentral[central] * 1.15).toFixed(2); // Aumento del 15% para la cena
+            let precioPlatoCentral = platoCentral[central] * 1.15; // Aumento del 15% para la cena
             listaPlatoCentral.push(`${nombrePlatoCentral} : ${precioPlatoCentral}€, \n`);
         }
         let listaComplementos = [];
         for (let complemento in complementos) {
             let nombreComplemento = complemento;
-            let precioComplemento = (complementos[complemento] * 1.15).toFixed(2); // Aumento del 15% para la cena
+            let precioComplemento = complementos[complemento] * 1.15; // Aumento del 15% para la cena
             listaComplementos.push(`${nombreComplemento} : ${precioComplemento}€, \n`);
         }
         alert(`Nuestro fantástico menú de cena es el siguiente:\nPlatos Centrales:\n${listaPlatoCentral}\nComplementos:\n${listaComplementos}`);
@@ -129,4 +129,56 @@ if (horario === "c") {
         eleccionComplementoDos = prompt("Elija otro complemento").toLowerCase(); 
         alert(comentarios[Math.floor(Math.random() * comentarios.length)]);
     }
-    precioCena(eleccionCentral, petic
+    precioCena(eleccionCentral, peticionEspecial);
+}
+
+// Funciones de cálculo de precios
+
+function precioDesayuno(eleccion, peticionEspecial) {
+    if (desayuno.hasOwnProperty(eleccion)){
+        let precio = desayuno[eleccion];
+        let precioTotal = precio;
+        if (peticionEspecial === "s") {
+            precio *= 1.05; // Aumento del 5% por petición especial
+            precioTotal *= 1.10; // Suma del 10% de IVA
+        }
+        alert(`El precio de tu desayuno es: ${precio}€. Sumando el IVA (10%) el total es: ${precioTotal.toFixed(2)}€`);
+    } else {
+        alert("No hay precio para ese plato.");
+    }
+}
+
+function precioComida (eleccion, complementoUno, complementoDos, peticionEspecial) {
+    let precio = platoCentral[eleccion] || 0;
+    let precioTotal = precio;
+    
+    if (complementos.hasOwnProperty(complementoUno)) {
+        precio += complementos[complementoUno];
+    }
+    
+    if (complementos.hasOwnProperty(complementoDos)) {
+        precio += complementos[complementoDos];
+    }
+
+    precioTotal += precio * 1.10; // Suma del 10% de IVA
+
+    if (peticionEspecial === "s") {
+        precioTotal *= 1.05; // Aumento del 5% por petición especial
+    } 
+
+    alert(`El precio de tu comida es: ${precio}€. Sumando el IVA (10%) el total es: ${precioTotal.toFixed(2)}€`);
+}
+
+function precioCena(eleccion, peticionEspecial) {
+    let precio = platoCentral[eleccion] * 1.15; // Aumento del 15% para la cena
+    let precioTotal = precio;
+    
+    if (peticionEspecial === "s") {
+        precioTotal *= 1.05; // Aumento del 5% por petición especial
+    } 
+
+    precioTotal *= 1.10; // Suma del 10% de IVA
+    precioTotal = Math.round(precioTotal * 100) / 100; // Redondeo del precio total a dos decimales
+
+    alert(`El precio de tu cena es: ${precio.toFixed(2)}€. Sumando el IVA (10%) el total es: ${precioTotal.toFixed(2)}€`);
+}
